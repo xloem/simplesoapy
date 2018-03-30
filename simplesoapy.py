@@ -5,9 +5,19 @@ import sys, math, logging, collections, collections.abc, itertools
 import SoapySDR
 import numpy
 
-__version__ = '1.5.1'
+__version__ = '1.5.2'
 logger = logging.getLogger(__name__)
 
+def versions():
+    """Return an array of loaded SoapySDR library version strings"""
+    versions_str = []
+    versions_str.append('simplesoapy {}'.format(__version__))
+    versions_str.append('SoapySDR {}'.format(SoapySDR.getLibVersion()))
+    for module in SoapySDR.listModules():
+        modver = SoapySDR.getModuleVersion(module)
+        if modver:
+            versions_str.append('{} {}'.format(module.split('/')[-1], modver))
+    return versions_str
 
 def closest(num_list, num):
     """Return number closest to supplied number from list of numbers"""
